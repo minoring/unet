@@ -1,6 +1,15 @@
 # Implementation of modified U-Net: Convolutional Networks for Biomedical Image Segmentation in TF 2.0 keras API.
 
-### References
+## Usage example
+```
+python main.py \
+    --train_path=data/membrane/train\
+    --batch_size=2 \
+    --epoch=50 \
+    --steps_per_epoch=300 \
+```
+
+## References
 ### paper
 - https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/
 
