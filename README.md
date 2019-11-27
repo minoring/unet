@@ -1,5 +1,12 @@
 # Implementation of modified U-Net: Convolutional Networks for Biomedical Image Segmentation in TF 2.0 keras API.
 ![](https://github.com/minoring/unet/blob/master/misc//u-net-architecture.png)
+
+## Results
+Initial predict          |  Training process
+:-------------------------:|:-------------------------:
+![](https://github.com/minoring/unet/blob/master/samples/predict_image_0.jpg)  |  ![](https://github.com/minoring/unet/blob/master/samples/unet.gif)
+
+
 ## Usage example
 ```
 python main.py \
