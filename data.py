@@ -47,6 +47,7 @@ def train_generator(flags_obj, data_aug_args):
       save_prefix='label',
       seed=flags_obj.seed)
 
-  for img, mask in zip(image_generator, mask_generator):
-    img, mask = preprocess_data(img, mask)
-    yield (img, mask)
+  train_gene = (preprocess_data(img, mask)
+                for img, mask in zip(image_generator, mask_generator))
+
+  return train_gene

@@ -6,6 +6,8 @@ from absl import flags
 from flags import define_flags
 from model import unet
 from data import train_generator
+from utils import load_example_img
+from utils import DisplayCallback
 from utils import plot_history
 
 
@@ -33,11 +35,17 @@ def run(flags_obj):
   #   to_file='model.png',
   #   show_shapes=True
   # )
-  history = model.fit_generator(train_gene,
-                                epochs=flags_obj.epoch,
-                                steps_per_epoch=300)
+
+  example = load_example_img(flags_obj)
+
+  history = model.fit_generator(
+      train_gene,
+      epochs=flags_obj.epoch,
+      steps_per_epoch=3,
+      callbacks=[DisplayCallback(model, example)])
 
   plot_history(history, flags_obj.epoch)
+
 
 def main(_):
   run(flags.FLAGS)
