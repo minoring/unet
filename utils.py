@@ -64,7 +64,7 @@ def plot_history(history, epoch):
   plt.ylim([0, 1])
 
   plt.savefig('samples/Learning history')
-  plt.show()
+  plt.clf()
 
 
 def load_example(flags_obj):
