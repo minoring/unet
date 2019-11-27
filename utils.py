@@ -18,7 +18,7 @@ class DisplayCallback(tf.keras.callbacks.Callback):
 
 def save_prediction(model, example, epoch):
   image, mask = example
-  pred_mask = model.predict(tf.expand_dims(image, axis=0))
+  pred_mask = model.predict(tf.expand_dims(image, axis=0), steps=1)
 
   plt.figure(figsize=(15, 15))
 
