@@ -1,17 +1,19 @@
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import os
+import imageio
+import glob
+
 
 class DisplayCallback(tf.keras.callbacks.Callback):
 
   def __init__(self, model, example):
-    if os.path.isdir('samples'):
-      os.mkdir('samples')
+
     self.model = model
     self.example = example
 
   def on_epoch_end(self, epoch, logs=None):
-    save_prediction(self.model, self.example, epoch)
+    save_prediction(self.model, self.example, epoch + 1)
 
 
 def save_prediction(model, example, epoch):
@@ -73,3 +75,21 @@ def load_example_img(flags_obj):
       example_mask, (flags_obj.input_size[0], flags_obj.input_size[1]))
 
   return (example_img, example_mask)
+
+
+def create_gif():
+  """Create gif using saved images"""
+  anim_file = 'samples/unet.gif'
+
+  with imageio.get_writer(anim_file, mode='I') as writer:
+    filenames = glob.glob('samples/predict_image_*.jpg')
+    filenames = sorted(filenames)
+    last = -1
+    for i, filename in enumerate(filenames):
+      frame = 2 * (i**0.5)
+      if round(frame) > round(last):
+        last = frame
+        image = imageio.imread(filename)
+        writer.append_data(image)
+    image = imageio.imread(filename)
+    writer.append_data(image)

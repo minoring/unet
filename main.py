@@ -1,3 +1,5 @@
+import os
+
 import tensorflow as tf
 
 from absl import app
@@ -9,6 +11,8 @@ from data import train_generator
 from utils import load_example_img
 from utils import DisplayCallback
 from utils import plot_history
+from utils import save_prediction
+from utils import create_gif
 
 
 def run(flags_obj):
@@ -38,16 +42,22 @@ def run(flags_obj):
 
   example = load_example_img(flags_obj)
 
+  # Save first prediction without training.
+  save_prediction(model, example, 0)
+
   history = model.fit_generator(
       train_gene,
       epochs=flags_obj.epoch,
       steps_per_epoch=3,
       callbacks=[DisplayCallback(model, example)])
 
+  create_gif()
   plot_history(history, flags_obj.epoch)
 
 
 def main(_):
+  if not os.path.isdir('samples'):
+    os.mkdir('samples')
   run(flags.FLAGS)
 
 
