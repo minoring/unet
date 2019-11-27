@@ -11,6 +11,8 @@ def define_flags():
   flags.DEFINE_list('input_size', [256, 256, 1], 'The size of input image')
   flags.DEFINE_list('target_size', [256, 256], 'Size of target image')
   flags.DEFINE_integer('epoch', 5, 'The number of training epoch')
+  flags.DEFINE_integer('steps_per_epoch', 300,
+                       'Number of training step per epoch')
   flags.DEFINE_integer('batch_size', 3, 'Batch size')
   flags.DEFINE_float('learning_rate', 3e-4, 'Learning rate [3e-4].')
   flags.DEFINE_string(

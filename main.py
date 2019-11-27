@@ -48,7 +48,7 @@ def run(flags_obj):
   history = model.fit_generator(
       train_gene,
       epochs=flags_obj.epoch,
-      steps_per_epoch=3,
+      steps_per_epoch=flags_obj.steps_per_epoch,
       callbacks=[DisplayCallback(model, example)])
 
   create_gif()
