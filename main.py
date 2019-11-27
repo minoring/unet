@@ -6,6 +6,7 @@ from absl import flags
 from flags import define_flags
 from model import unet
 from data import train_generator
+from utils import plot_history
 
 
 def run(flags_obj):
@@ -26,10 +27,17 @@ def run(flags_obj):
       loss=tf.keras.losses.BinaryCrossentropy(),
       metrics=['accuracy'])
 
-  H = model.fit_generator(train_gene,
-                          epochs=flags_obj.epoch,
-                          steps_per_epoch=300)
-  
+  ## Show model architecture.
+  # tf.keras.utils.plot_model(
+  #   model,
+  #   to_file='model.png',
+  #   show_shapes=True
+  # )
+  history = model.fit_generator(train_gene,
+                                epochs=flags_obj.epoch,
+                                steps_per_epoch=300)
+
+  plot_history(history, flags_obj.epoch)
 
 def main(_):
   run(flags.FLAGS)
