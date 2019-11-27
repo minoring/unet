@@ -1,5 +1,5 @@
 # Implementation of modified U-Net: Convolutional Networks for Biomedical Image Segmentation in TF 2.0 keras API.
-![](https://github.com/minoring/unet/blob/master/u-net-architecture.png)
+![](https://github.com/minoring/unet/blob/master/misc//u-net-architecture.png)
 ## Usage example
 ```
 python main.py \
@@ -25,4 +25,4 @@ https://towardsdatascience.com/understanding-semantic-segmentation-with-unet-6be
 Implementation of deep learning framework -- Unet, using Keras https://github.com/zhixuhao/unet
 
 ## Model Architecture
-![](https://github.com/minoring/unet/blob/master/model.png)
+![](https://github.com/minoring/unet/blob/master/misc/model.png)
