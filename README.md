@@ -23,3 +23,6 @@ https://towardsdatascience.com/understanding-semantic-segmentation-with-unet-6be
 
 ### code
 Implementation of deep learning framework -- Unet, using Keras https://github.com/zhixuhao/unet
+
+## Model Architecture
+![](https://github.com/minoring/unet/blob/master/model.png)
