@@ -1,5 +1,7 @@
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
+import tensorflow as tf
 import numpy as np
+
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 
 def preprocess_data(img, mask):
@@ -49,3 +51,22 @@ def train_generator(flags_obj, data_aug_args):
                 for img, mask in zip(image_generator, mask_generator))
 
   return train_gene
+
+
+def process_path(file_path):
+  img = tf.io.read_file(file_path)
+  img = tf.image.decode_png(img, channels=1)
+  img = tf.image.convert_image_dtype(img, tf.float32)
+
+  return tf.expand_dims(tf.image.resize(img, (256, 256)), axis=0)
+
+
+def load_test_dataset(test_dir_path='data/membrane/test'):
+  image_list_ds = tf.data.Dataset.list_files(test_dir_path + '/image/*')
+  label_list_ds = tf.data.Dataset.list_files(test_dir_path + '/label/*')
+  image_ds = image_list_ds.map(process_path,
+                               num_parallel_calls=tf.data.experimental.AUTOTUNE)
+  label_ds = label_list_ds.map(process_path,
+                               num_parallel_calls=tf.data.experimental.AUTOTUNE)
+
+  return tf.data.Dataset.zip((image_ds, label_ds))

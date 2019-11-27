@@ -9,6 +9,7 @@ from absl import flags
 from flags import define_flags
 from model import unet
 from data import train_generator
+from data import load_test_dataset 
 from utils import load_example
 from utils import DisplayCallback
 from utils import plot_history
@@ -34,27 +35,29 @@ def run(flags_obj):
       loss=tf.keras.losses.BinaryCrossentropy(),
       metrics=['accuracy'])
 
+  example = load_example(flags_obj)
+  example_img = imageio.imread('data/membrane/test/image/0.png')
+  # Save first prediction without training.
+  save_prediction(model, example_img, example, 0)
+
+  test_ds = load_test_dataset()
+
+  history = model.fit_generator(
+      train_gene,
+      epochs=flags_obj.epoch,
+      steps_per_epoch=flags_obj.steps_per_epoch,
+      validation_data=test_ds,
+      callbacks=[DisplayCallback(model, example)])
+
+  create_gif()
+  plot_history(history, flags_obj.epoch)
+
   ## Show model architecture.
   # tf.keras.utils.plot_model(
   #   model,
   #   to_file='model.png',
   #   show_shapes=True
   # )
-
-  example = load_example(flags_obj)
-  example_img = imageio.imread('data/membrane/test/0.png')
-  # Save first prediction without training.
-  save_prediction(model, example_img, example, 0)
-
-  history = model.fit_generator(
-      train_gene,
-      epochs=flags_obj.epoch,
-      steps_per_epoch=flags_obj.steps_per_epoch,
-      callbacks=[DisplayCallback(model, example)])
-
-  create_gif()
-  plot_history(history, flags_obj.epoch)
-
 
 def main(_):
   if not os.path.isdir('samples'):
