@@ -1,4 +1,5 @@
 import os
+import imageio
 
 import tensorflow as tf
 
@@ -8,7 +9,7 @@ from absl import flags
 from flags import define_flags
 from model import unet
 from data import train_generator
-from utils import load_example_img
+from utils import load_example
 from utils import DisplayCallback
 from utils import plot_history
 from utils import save_prediction
@@ -40,10 +41,10 @@ def run(flags_obj):
   #   show_shapes=True
   # )
 
-  example = load_example_img(flags_obj)
-
+  example = load_example(flags_obj)
+  example_img = imageio.imread('data/membrane/test/0.png')
   # Save first prediction without training.
-  save_prediction(model, example, 0)
+  save_prediction(model, example_img, example, 0)
 
   history = model.fit_generator(
       train_gene,
